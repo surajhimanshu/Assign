@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            display: flex;
+            /* border: 1px solid green; */
+            background-color: rgb(233, 237, 229);
+            color: rgb(9, 8, 9);
+            justify-content: space-evenly;
+            font-size: 2em;
+            margin-top: 0%;
+            margin-bottom: 50px;
+        }
+
+        #container{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 5%;
+           /* margin-top: 10px;  */
+        }
+        img{
+            width: 300px;
+            height: 150px;
+        }
+        #container > div{
+            border: 5px solid red;
+            padding: 1em;
+        }
+        h5{
+            margin-top: 0%;
+            margin-bottom: 0%;
+            /* border: 1px solid green; */
+            
+        }
+        
+        #container > div > h5:first-of-type{
+            color: rgb(83, 87, 83);
+        }
+        h4{
+            color: rgb(0, 38, 255);
+        }
+        
+        
+        
+    </style>
+</head>
+<body>
+    <div id="box">
+        <a href="./sports.html">Sports</a>
+        <a href="./technology.html">Technology</a>
+        <a href="./entertainment.html">Entertainment</a>
+    </div>
+    <div id="container">
+
+    </div>
+    <script type="text/javascript">
+        window.addEventListener("load", function(){
+            loadNews();
+        })
+
+        
+
+        function loadNews(){
+            fetch(`https://newsapi.org/v2/everything?q=india&apiKey=6f81cd945cbc4b9aba7203be98176b17`)
+            .then(function(res){
+                return res.json()
+            })
+            .then(function(res){
+                // console.log(res.articles)
+                displayNews(res.articles);
+                return
+            })
+            .catch(function(err){
+                console.log(err)
+            })
+        }
+
+        function displayNews(data){
+             for(let i=0;i<10;i++){
+                //  console.log(data[0]);
+                    createNewsBox(data[i])
+            }
+            //createNewsBox(data[0])
+            return
+        }
+
+        function createNewsBox(data){
+            var div = document.createElement("div");
+            var container = document.getElementById("container");
+            // container.innerHTML =""
+            var h3Source = document.createElement("h3");
+            h3Source.textContent = `News Source - ${data.source.name}`;
+
+            var img = document.createElement("img");
+            img.src = data.urlToImage;
+            img.alt = `Error in image link`;
+
+            var h5PublishedAt = document.createElement("h5");
+            h5PublishedAt.textContent = `${data.publishedAt}`;
+
+            var h5Author = document.createElement("h5");
+            h5Author.textContent =`By ${data.author}`
+
+            var h4Title = document.createElement("h4");
+            h4Title.textContent = `${data.title}`
+
+            var pDescription = document.createElement("p");
+            pDescription.textContent = `${data.description}` 
+
+            div.append(h3Source,img,h5PublishedAt,h5Author,h4Title,pDescription);
+            container.append(div);
+
+        }
+
+        // loadNews();
+    </script>
+</body>
+</html>
