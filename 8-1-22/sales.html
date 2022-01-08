@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            display: block;
+            margin-bottom: 20px;
+            border: 1px solid green;
+            height: 20px;
+            font-size: 1.1em;
+            width: fit-content;
+        }
+        form{
+            width: 30%;
+            padding: 1px;
+            padding-left:10px;
+            margin: 40px auto 60px;
+            border: 2px solid red;
+        }
+        table{
+            width: 60%;
+            margin: auto;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <form>
+        Employee Name
+        <input type="text" name="empName" id="empName">
+        Employee Department
+        <input type="text" name="empDepartment" id="empDepartment">
+        Sales Year 1
+        <input type="number" name="sales1" id="sales1">
+        Sales Year 2
+        <input type="number" name="sales2" id="sales2">
+        <input type="submit">
+    </form>
+
+    <table border="4">
+        <thead>
+            <tr>
+                <td>Employee name</td>
+                <td>Employee department</td>
+                <td>Sales Year 1</td>
+                <td>Sales Year 2</td>
+                <td>Average Sales</td>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr></tr> -->
+        </tbody>
+    </table>
+    
+    <button onclick="ascend()">Ascending order</button>
+    <button onclick="descend()">Descending order</button>
+    <script>
+       let f =  document.querySelector('form');
+       f.addEventListener('submit',retrieve)
+        const db = [];
+       function retrieve(e){
+           e.preventDefault();
+           let empName = document.querySelector('#empName').value;
+           let empDepartment = document.querySelector('#empDepartment').value;
+           let sales1 = document.querySelector('#sales1').value;
+           let sales2 = document.querySelector('#sales2').value;
+           let avgSale = (Number(sales1) + Number(sales2)) / 2;
+            // console.log(empName,empDepartment,sales1,sales2);
+            let r=[]
+            r.push(avgSale,empName,empDepartment,sales1,sales2);
+            db.push(r);
+            let tbody =  document.querySelector("tbody")
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td>${empName}</td><td>${empDepartment}</td><td>${sales1}</td><td>${sales2}</td><td>${avgSale}</td>`
+            tbody.append(tr);
+            document.querySelector('#empName').value ="";
+            document.querySelector('#empDepartment').value="";
+            document.querySelector('#sales1').value="";
+            document.querySelector('#sales2').value="";
+        }
+
+       function ascend(){
+            db.sort((a,b) => (a[0] - b[0]));
+            let tbody =  document.querySelector("tbody");
+            tbody.innerHTML = ``;
+            for(let i=0;i<db.length;i++){
+                let avgSale = db[i][0]; 
+                let empName = db[i][1];
+                let empDepartment = db[i][2];
+                let sales1 = db[i][3];
+                let sales2 = db[i][4];
+                let tr = document.createElement("tr");
+                tr.innerHTML = `<td>${empName}</td><td>${empDepartment}</td><td>${sales1}</td><td>${sales2}</td><td>${avgSale}</td>`
+                tbody.append(tr);
+                   
+            }
+            
+       }
+
+       function descend(){
+            db.sort((a,b) => (b[0] - a[0]));
+            let tbody =  document.querySelector("tbody");
+            tbody.innerHTML = ``;
+            for(let i=0;i<db.length;i++){
+                let avgSale = db[i][0]; 
+                let empName = db[i][1];
+                let empDepartment = db[i][2];
+                let sales1 = db[i][3];
+                let sales2 = db[i][4];
+                let tr = document.createElement("tr");
+                tr.innerHTML = `<td>${empName}</td><td>${empDepartment}</td><td>${sales1}</td><td>${sales2}</td><td>${avgSale}</td>`
+                tbody.append(tr);
+                   
+            }
+            
+       }
+       
+    </script>
+</body>
+</html>
