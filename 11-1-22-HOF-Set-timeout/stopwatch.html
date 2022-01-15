@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .timer{
+            width: 30%;
+            display: flex;
+            margin: 40px auto;
+        }
+        h1{
+            margin-right: 10px;
+            font-size: 3em;
+        }
+        .btn{
+            width: 40%;
+            margin: auto;
+          }
+        span{
+            font-size: 5em;
+            padding-top: 3%;
+            margin-right: 5px;
+        }
+        button{
+            font-size: 3em;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <input type="number" placeholder="Enter hours" name = "hours">
+        <input type="number" placeholder="Enter min" name = "min">
+        <input type="number" placeholder="Enter sec" name = "sec">
+        <input type="submit">
+    </form>
+
+    <div class="timer">
+        <h1 class="hours">00</h1>
+        <span>:</span>
+        <h1 class="min">00</h1>
+        <span>:</span>
+        <h1 class="sec">00</h1>
+    </div>
+    <div class="btn">
+        <button class="start">Start</button>
+       
+        <button class="stop">Stop</button>
+       
+        <button class="reset">Reset</button>
+    </div>
+    <script>
+        const form  = document.querySelector('form');
+        form.addEventListener('submit' , calculateTotalTime);
+        let timer = 0;
+        const start = document.querySelector('.start');
+        const stop  = document.querySelector('.stop');
+        const reset = document.querySelector('.reset');
+        let startClick =true,stopClick=true;
+        let hour = document.querySelector('.hours');
+        let min = document.querySelector('.min');
+        let second = document.querySelector('.sec');
+        let clear;
+
+        function calculateTotalTime(e){
+            e.preventDefault();
+            let hours = Number(e.target.hours.value);
+            let mins = Number(e.target.min.value);
+            let sec = Number(e.target.sec.value);
+            timer = (hours * 60 * 60) + (mins * 60) + sec;
+            hour.textContent = hours;
+            min.textContent = mins;
+            second.textContent = sec;
+            form.reset();
+            e.preventDefault();
+        }
+
+        
+        start.addEventListener("click",startTimer);
+         stop.addEventListener("click", stopTimer);
+        reset.addEventListener("click",resetTimer);
+        function startTimer(e){
+            if(timer === 0) return
+            if(startClick){
+                startClick =false;
+                stopClick  =true;
+            }else{
+                return
+            }
+           
+           clear =  setInterval(()=>{
+               timer--;
+               if(timer === 0) {
+                    clearInterval(clear);
+                    update()
+               } 
+                 let seconds = timer % 60; 
+                 let mins = Math.floor(timer / 60) % 60; 
+                 let hours = Math.floor(timer / (60 * 60)) % 24;
+                 second.textContent = seconds;
+                 min.textContent = mins;
+                 hour.textContent = hours;
+
+            },1000)
+        }
+        function stopTimer(e){
+            e.preventDefault();
+            if(stopClick){
+                stopClick =false;
+                startClick =true;
+            }else{
+                return;
+            }
+            clearInterval(clear);
+        }
+        function resetTimer(e){
+            e.preventDefault();
+            clearInterval(clear)
+            timer =0;
+            startClick = true;
+            stopClick = true;
+            update();
+        }
+
+        function update(){
+            second.textContent = '00';
+            min.textContent = '00';
+            hour.textContent = '00';
+        }
+    </script>
+</body>
+</html>
