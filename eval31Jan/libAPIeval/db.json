@@ -1,0 +1,54 @@
+{
+  "databaseForBooks": [
+    {
+      "book": "Harry Potter",
+      "author": "JK Rowling",
+      "comments": [
+        "Nice Book",
+        "Epic Story"
+      ],
+      "id": 1
+    },
+    {
+      "book": "Harry Potter1",
+      "author": "JK Rowling1",
+      "comments": [
+        "Nice Book 1",
+        "Epic Story 1"
+      ],
+      "id": 2
+    },
+    {
+      "book": "harry",
+      "author": "jk",
+      "comments": [
+        "nice"
+      ],
+      "id": 3
+    },
+    {
+      "book": "harry1",
+      "author": "jk1",
+      "comments": [
+        "nice"
+      ],
+      "id": 4
+    },
+    {
+      "book": "harry",
+      "author": "jk",
+      "comments": [
+        "nice1"
+      ],
+      "id": 5
+    },
+    {
+      "book": "harry potter",
+      "author": "jk rowl",
+      "comments": [
+        "fiction"
+      ],
+      "id": 6
+    }
+  ]
+}

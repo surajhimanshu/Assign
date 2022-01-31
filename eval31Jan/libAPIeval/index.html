@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            display: flex;
+            margin-top: 30px;
+            /* justify-content: space-between; */
+            gap:2%;
+            flex-wrap: wrap;
+        }
+        .post-card{
+            width: 27%;
+            border: 1px solid red;
+            padding: 2%;
+        }
+        li{
+            font-size: 1.4em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Suraj</h1>
+    <form>
+        <input name="book" type="text" placeholder="name of book">
+        <input name="author" type="text" placeholder="Author">
+        <input name="comment" type="text" placeholder="Comments">
+        <input type="submit">
+    </form>
+    <div class="container">
+        <!-- <div>
+            <h2>Book Name - </h2>
+            <h1></h1>
+            <h2>Book Author</h2>
+            <h1></h1>
+            <h4>Comments</h4>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div> -->
+    </div>
+    <script type="text/javascript">
+        let container = document.querySelector(".container");
+        let form = document.querySelector('form');
+        form.addEventListener('submit',handleSubmit);
+
+
+        async function retrieve(){
+            let res = await fetch(`http://localhost:3000/databaseForBooks`)
+            let data = await res.json();
+
+            display(data)
+            
+        }
+
+        function display(data){
+            container.innerHTML = "";
+            for(let post of data){
+                 createPostCard(post)
+            }
+        }
+
+        function createPostCard(data){
+            let div = document.createElement("div");
+            div.className = "post-card";
+            let {book,author,comments,id} = data;
+            let h2 = document.createElement("h2");
+            h2.textContent = `Book Name - ${book}`;
+
+            let h21 = document.createElement("h2");
+            h21.textContent = `Author Name - ${author}`;
+
+            let ol = document.createElement("ol");
+            for(let comment of comments){
+                let li = document.createElement("li");
+                li.textContent = comment;
+                ol.append(li);
+            }
+            
+            let button = document.createElement("button");
+            button.textContent = `Edit comment`;
+            button.onclick = () =>{
+                
+                prompt(ol.textContent )
+            }
+            div.append(h2,h21,ol,button);
+            container.append(div);
+        }
+
+        retrieve();
+
+        async function handleSubmit(event){
+            event.preventDefault();
+            
+            let book = event.target.book.value;
+            let author = event.target.author.value;
+            let comments = event.target.comment.value;
+            // console.log(book,author,comment);
+
+            const resp = await createPost({book,author,comments:[comments]});
+
+            await retrieve();
+        }
+
+        async function createPost(data){
+            try{
+
+                let res = await fetch("http://localhost:3000/databaseForBooks",{
+                    method:"POST",
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify(data)
+                })
+                let da = res.json()
+            }catch(e){
+
+            }
+
+            
+        }
+    </script>
+</body>
+</html>
