@@ -1,0 +1,23 @@
+.container_groc{
+    width: 40%;
+    margin: auto;
+    display: flex;
+    height: 50px;
+    border :1px solid black;
+    margin-top: 30px;
+}
+.container_groc p {
+    height: 100%;
+    width: 76%;
+    font-size: 2em;
+    margin-top:0.6%;
+    text-transform: uppercase;
+    padding-left: 10px;
+}
+.container_groc button{
+    height: 100%;
+    width: 24%;
+    font-size: 1.3em;
+    border: none;
+    border-left:1px solid black ;
+}
